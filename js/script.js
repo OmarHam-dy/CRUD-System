@@ -79,7 +79,9 @@ const updateTable = function () {
   products.map(function (product, i) {
     // Create HTML element
     const rowElement = `
-    <tr class="border-bottom" data-id='${i}'>
+    <tr class="border-bottom ${
+      currentUpdatedProduct == i ? 'bg-primary-subtle' : ''
+    }" data-id='${i}'>
         <td>${i + 1}</td>
         <td>${product.name}</td>
         <td>${product.category}</td>
@@ -91,7 +93,9 @@ const updateTable = function () {
           </button>
         </td>
         <td>
-          <button type="button" class="delete-button btn btn-outline-danger">
+          <button type="button" class="delete-button btn btn-outline-danger" ${
+            currentUpdatedProduct == i ? 'disabled' : ''
+          }>
             <i class="fa-solid fa-trash"></i>
           </button>
         </td>
