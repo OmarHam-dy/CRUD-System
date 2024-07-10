@@ -112,9 +112,9 @@ const updateUI = function () {
 };
 
 const init = function () {
-  updateUI();
-  addStatus = true;
   currentUpdatedProduct = -1;
+  addStatus = true;
+  updateUI();
 };
 init();
 
