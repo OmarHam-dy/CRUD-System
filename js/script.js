@@ -47,10 +47,8 @@ const clearInputs = function () {
 const displayProduct = function (id) {
   currentUpdatedProduct = id;
 
-  // Disable delete button
-  document
-    .querySelector(`tbody tr[data-id="${currentUpdatedProduct}"]`)
-    .querySelector('.delete-button').disabled = true; //.setAttribute('disabled', '');
+  // Update table (disable all delete buttons)
+  updateTable();
 
   // Display product info
   inputName.value = products[id].name;
@@ -77,6 +75,7 @@ const updateTable = function () {
   tableBody.textContent = '';
 
   products.map(function (product, i) {
+    console.log(currentUpdatedProduct);
     // Create HTML element
     const rowElement = `
     <tr class="border-bottom ${
@@ -88,13 +87,15 @@ const updateTable = function () {
         <td>${product.price}</td>
         <td>${product.description}</td>
         <td>
-          <button type="button" class="update-button btn btn-outline-success">
+          <button type="button" class="update-button btn btn-outline-success" ${
+            currentUpdatedProduct != -1 ? 'disabled' : ''
+          }>
             <i class="fa-solid fa-pen-to-square"></i>
           </button>
         </td>
         <td>
           <button type="button" class="delete-button btn btn-outline-danger" ${
-            currentUpdatedProduct == i ? 'disabled' : ''
+            currentUpdatedProduct != -1 ? 'disabled' : ''
           }>
             <i class="fa-solid fa-trash"></i>
           </button>
@@ -141,10 +142,11 @@ const addProduct = function () {
 };
 
 const updateProduct = function () {
+  if (inputsEmpty()) {
+    window.alert('Empty data cannot be updated');
+    return;
+  }
   products[currentUpdatedProduct] = readInputs();
-  document
-    .querySelector(`tbody tr[data-id="${currentUpdatedProduct}"]`)
-    .querySelector('.delete-button').disabled = false; //.removeAttribute('disabled');
   currentUpdatedProduct = -1;
   updateTable();
   toggleButtonStatus();
