@@ -4,6 +4,7 @@ const inputName = document.querySelector('input[id=name]');
 const inputCategory = document.querySelector('input[id=category]');
 const inputPrice = document.querySelector('input[id=price]');
 const inputDescription = document.querySelector('textarea[id=description]');
+const inputSearch = document.getElementById('search');
 const inputs = [inputName, inputCategory, inputPrice, inputDescription];
 
 const buttonAddUpdate = document.querySelector('button.add-update');
@@ -70,7 +71,7 @@ const updateAlert = function () {
   }
 };
 
-const updateTable = function () {
+const updateTable = function (products) {
   // Clear the exitsting products
   tableBody.textContent = '';
 
@@ -107,7 +108,7 @@ const updateTable = function () {
 };
 
 const updateUI = function () {
-  updateTable();
+  updateTable(products);
   updateAlert();
 };
 
@@ -148,7 +149,7 @@ const updateProduct = function () {
   }
   products[currentUpdatedProduct] = readInputs();
   currentUpdatedProduct = -1;
-  updateTable();
+  updateTable(products);
   toggleButtonStatus();
   clearInputs();
 };
@@ -187,3 +188,12 @@ tableBody.addEventListener('click', function (e) {
     deleteProduct(e.target.closest('tr').dataset.id);
   }
 });
+
+const updateDisplayedProducts = function (e) {
+  const filteredProducts = products.filter(product =>
+    product.name.toLowerCase().includes(this.value.toLowerCase())
+  );
+  updateTable(filteredProducts);
+};
+
+inputSearch.addEventListener('keyup', updateDisplayedProducts);
