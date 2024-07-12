@@ -65,9 +65,11 @@ const updateAlert = function () {
   if (products.length) {
     alert.style.display = 'none';
     table.style.display = 'table';
+    inputSearch.style.display = 'block';
   } else {
     alert.style.display = 'block';
     table.style.display = 'none';
+    inputSearch.style.display = 'none';
   }
 };
 
