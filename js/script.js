@@ -14,20 +14,53 @@ const alert = document.querySelector('.alert');
 const tableBody = document.querySelector('tbody');
 const table = document.querySelector('table');
 
+class Product {
+  constructor(
+    name = 'Not Defined',
+    category = 'Not Defined',
+    price = 'Not Defined',
+    description = 'Not Defined'
+  ) {
+    this.name = name;
+    this.category = category;
+    this.price = price;
+    this.description = description;
+  }
+
+  set name(name) {
+    this._name = name;
+  }
+  get name() {
+    return this._name;
+  }
+
+  set category(category) {
+    this._category = category;
+  }
+  get category() {
+    return this._category;
+  }
+
+  set price(price) {
+    this._price = price;
+  }
+  get price() {
+    return this._price;
+  }
+
+  set description(description) {
+    this._description = description;
+  }
+  get description() {
+    return this._description;
+  }
+}
+
 const products = [
-  {
-    name: 'Apple',
-    category: 'Fruits',
-    price: '$1',
-    description: 'Red and delicious',
-  },
-  {
-    name: 'Carrot',
-    category: 'Vegetables',
-    price: '$2',
-    description: 'Fresh and healthy',
-  },
+  new Product('Apple', 'Fruits', '$1', 'Red and delicious'),
+  new Product('Carrot', 'Vegetables', '$2', 'Fresh and healthy'),
 ];
+
 let addStatus;
 let currentUpdatedProduct;
 
@@ -49,7 +82,7 @@ const displayProduct = function (id) {
   currentUpdatedProduct = id;
 
   // Update table (disable all delete buttons)
-  updateTable();
+  updateTable(products);
 
   // Display product info
   inputName.value = products[id].name;
@@ -78,7 +111,7 @@ const updateTable = function (products) {
   tableBody.textContent = '';
 
   products.map(function (product, i) {
-    console.log(currentUpdatedProduct);
+    // console.log(currentUpdatedProduct);
     // Create HTML element
     const rowElement = `
     <tr class="border-bottom ${
@@ -124,12 +157,12 @@ init();
 /* CURD functions */
 
 const readInputs = function () {
-  return {
-    name: inputName.value,
-    category: inputCategory.value,
-    price: inputPrice.value,
-    description: inputDescription.value,
-  };
+  return new Product(
+    inputName.value,
+    inputCategory.value,
+    inputPrice.value,
+    inputDescription.value
+  );
 };
 
 const addProduct = function () {
